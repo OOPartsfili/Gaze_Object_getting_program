@@ -126,7 +126,7 @@ def Eye_points_filter(file_path):
 
 
 if __name__ == '__main__':
-    file_path = '../HRT_data/HRT2.csv'
+    file_path = '../HRT_data/HRT.csv'
 
     # 数据读取
     gaze_points = read_point(file_path)

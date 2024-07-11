@@ -48,7 +48,7 @@ def main():
     argparser.add_argument(
         '-f', '--recorder_filename',
         metavar='F',
-        default=r"E:\Search_data_package\Alignment_program\Data_program\Log_data\LOG.log",
+        default=r"E:\Search_data_package\Alignment_program\Gaze_Object_getting_program\Log_data\LOG.log",
         help='recorder filename')
     argparser.add_argument(
         '--host',

@@ -154,7 +154,7 @@ def main():
     argparser.add_argument(
         '-f', '--recorder-filename',
         metavar='F',
-        default=r'E:\Search_data_package\Alignment_program\Data_program\Log_data\LOG.log',
+        default=r'E:\Search_data_package\Alignment_program\Gaze_Object_getting_program\Log_data\LOG.log',
         help='recorder filename (test1.log)')
 
     argparser.add_argument(
@@ -212,7 +212,7 @@ def main():
         vehicles = world.get_actors().filter('vehicle.*')
         print(vehicles)
 
-        vehicle = vehicles.find(76)
+        vehicle = vehicles.find(217)
 
         # 初始化pygame
         pygame.init()

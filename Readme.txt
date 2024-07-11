@@ -2,7 +2,7 @@
 Carla_data的名称改为DATA
 HRT_data的名称改为HRT
 Log_data的名称改为LOG
-asset的名称，像素图的改为PIXEL ,屏幕图的改为SCREEN
+asset的名称，屏幕图改为SCREEN
 
 
 先运行Eye_maker进行整体数据滤波  # 在眼动数据大改进前需要做

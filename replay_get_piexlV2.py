@@ -11,7 +11,7 @@ import pygame
 from util import Time_maker
 import pandas as pd
 import Set_sensor
-from Scene_data import config03
+from Scene_data import Scene1
 
 
 # 注视点可视化,在pygame窗口里绘制注视点，看看情况
@@ -76,7 +76,7 @@ def find_points_in_rectangle(center, width, height):
 # 输出一个感知物体标签序列
 def Stare2FeelingArea(display_manager,Stare_point, file_path= 'obj_pixel_table.csv'):
     df = pd.read_csv(file_path)
-    obj_pixel_list = df['pixel']
+    obj_pixel_list = df['Pixel Value']
     # print(obj_pixel_list)
 
     # 使用函数获取矩形内部所有整数点坐标
@@ -105,7 +105,7 @@ def Stare2FeelingArea(display_manager,Stare_point, file_path= 'obj_pixel_table.c
 
     # 这里obj_pixel是物体对应的一个像素
     for obj_pixel_index in range(len(obj_pixel_list)):
-        obj_pixel = obj_pixel_list[obj_pixel_index].strip('()').split(',')
+        obj_pixel = obj_pixel_list[obj_pixel_index].strip('[]').split(',')
         obj_pixel = tuple(map(int, obj_pixel))
 
         if obj_pixel in pixel_list:
@@ -140,7 +140,7 @@ def main():
     argparser.add_argument(
         '-f', '--recorder-filename',
         metavar='F',
-        default=r'E:\Search_data_package\Alignment_program\Data_program\Log_data\LOG.log',
+        default=r'E:\Search_data_package\Alignment_program\Gaze_Object_getting_program\Log_data\LOG.log',
         help='recorder filename')
 
     argparser.add_argument(
@@ -234,24 +234,24 @@ def main():
         # 寻找主车
         vehicles = world.get_actors().filter('vehicle.*')
         print(vehicles)
-        vehicle = vehicles.find(178)
+        vehicle = vehicles.find(217)
 
         # 前景
-        Set_sensor.SensorManager(world, display_manager, 'RGBCamera',
+        Set_sensor.SensorManager(world, display_manager, 'IS',
                                  carla.Transform(carla.Location(x=2, y=-0.18, z=1.3), carla.Rotation(yaw=+00)),
-                                 vehicle, {'fov': '150'}, display_pos=[0, 1], Sp_flag=[[0, 0], [5740, 1010]])
+                                 vehicle, {'fov': '160'}, display_pos=[0, 1], Sp_flag=[[0, 0], [5740, 1010]])
         # 左后视镜
-        Set_sensor.SensorManager(world, display_manager, 'RGBCamera',
-                                 carla.Transform(carla.Location(x=0.3, y=-1, z=1.1), carla.Rotation(yaw=-150)),
+        Set_sensor.SensorManager(world, display_manager, 'IS',
+                                 carla.Transform(carla.Location(x=1.5, y=-1, z=1.1), carla.Rotation(yaw=-140)),
                                  vehicle, {}, display_pos=[0, 0], Sp_flag=[[700, 570], [670, 430]])
         # 右后视镜
-        Set_sensor.SensorManager(world, display_manager, 'RGBCamera',
-                                 carla.Transform(carla.Location(x=0.3, y=1, z=1.1), carla.Rotation(yaw=+150)),
+        Set_sensor.SensorManager(world, display_manager, 'IS',
+                                 carla.Transform(carla.Location(x=1.5, y=1, z=1.1), carla.Rotation(yaw=+140)),
                                  vehicle, {}, display_pos=[0, 2], Sp_flag=[[4719, 560], [670, 430]])
         # 正后视镜
-        Set_sensor.SensorManager(world, display_manager, 'RGBCamera',
+        Set_sensor.SensorManager(world, display_manager, 'IS',
                                  carla.Transform(carla.Location(x=-2.2, y=0, z=1.35), carla.Rotation(yaw=+180)),
-                                 vehicle, {}, display_pos=[1, 1], Sp_flag=[[2890, 210], [650, 190]])
+                                 vehicle, {'fov': '120'}, display_pos=[1, 1], Sp_flag=[[2890, 210], [650, 190]])
 
         # 设置刷新帧率
         clock = pygame.time.Clock()
@@ -324,7 +324,7 @@ def main():
         # df_pixel_list.to_csv('Stare_pixel_output.csv', index=False)
 
         # 存储注视物列表
-        dict_index = config03.Get_stareobj_index
+        dict_index = Scene1.Get_stareobj_index
 
         # 获取字典值作为列名
         column_names = [dict_index[i] for i in sorted(dict_index.keys())]
