@@ -21,7 +21,6 @@ dict_index = {
 
 
 Get_stareobj_index = {
-
     0: "Car1",
     1: "Car2",
     2: "Car3",
