@@ -105,9 +105,11 @@ def process_image(image):
 
     # 从上到下、从左到右排序中心点
     sorted_centers = sorted(largest_centers, key=lambda x: (x[0], x[1]))
+    # 把主车自己删了
+    sorted_centers = sorted_centers[:4] + sorted_centers[5:]
 
     # 定义车辆名称列表
-    car_names = ["Car1", "Car2", "Car3", "Car4", "main_Car", "Car5", "Car6", "Car7", "Car8", "Car9"]
+    car_names = ["Car1", "Car2", "Car3", "Car4", "Car5", "Car6", "Car7", "Car8", "Car9"]
 
     with open('obj_pixel_table.csv', mode='w', newline='') as file:
         writer = csv.writer(file)

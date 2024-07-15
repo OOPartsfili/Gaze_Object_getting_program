@@ -25,7 +25,6 @@ Get_stareobj_index = {
     1: "Car2",
     2: "Car3",
     3: "Car4",
-    4: "main_car",
     5: "Car5",
     6: "Car6",
     7: "Car7",

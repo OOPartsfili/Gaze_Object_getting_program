@@ -61,19 +61,15 @@ def find_points_in_rectangle(center, width, height):
             points.append([x, y])
     return points
 
-# 这样有和像素字典同长度的感知列表了
-df = pd.read_csv( 'obj_pixel_table.csv')
-obj_pixel_list = df['Pixel Value']
-Feeling_list = []
-for i in range(len(obj_pixel_list)):
-        Feeling_list.append(0)
+
 
 
 # 感受野方法
 # 输入一个注视点，一个像素对应物体字典CSV文件路径
 # 输出一个感知物体标签序列
 def Stare2FeelingArea(display_manager,Stare_point, file_path= 'obj_pixel_table.csv'):
-    global Feeling_list
+    # 准备装注视物ID
+    Feeling_ID = 0
     df = pd.read_csv(file_path)
     obj_pixel_list = df['Pixel Value']
     # print(obj_pixel_list)
@@ -99,13 +95,11 @@ def Stare2FeelingArea(display_manager,Stare_point, file_path= 'obj_pixel_table.c
     for obj_pixel_index in range(len(obj_pixel_list)):
         obj_pixel = obj_pixel_list[obj_pixel_index].strip('[]').split(',')
         obj_pixel = tuple(map(int, obj_pixel))
-
-        if obj_pixel in pixel_list:
-            # 感知到了
-            Feeling_list[obj_pixel_index] = 1
+        if obj_pixel in pixel_list:   # 感知到了
+            Feeling_ID = obj_pixel_index + 1
 
     # print(Feeling_list)
-    return Feeling_list
+    return Feeling_ID
 
 def main():
     argparser = argparse.ArgumentParser(
@@ -131,7 +125,7 @@ def main():
     argparser.add_argument(
         '-x', '--time-factor',
         metavar='X',
-        default=0.4,
+        default=0.6,
         type=float)
     argparser.add_argument('-i', '--ignore-hero',action='store_true')
     argparser.add_argument('--move-spectator',action='store_true')
@@ -227,14 +221,8 @@ def main():
 
             clock.tick(fps)
 
-        # 存储注视物列表
-        dict_index = Scene1.Get_stareobj_index
-
-        # 获取字典值作为列名
-        column_names = [dict_index[i] for i in sorted(dict_index.keys())]
-
         # 创建 DataFrame
-        df = pd.DataFrame(Final_list, columns=column_names)
+        df = pd.DataFrame(Final_list, columns=['Stare_obj'])
 
         # 输出 DataFrame 查看结构
         print(df)
