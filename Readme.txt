@@ -1,10 +1,10 @@
 文件是有命名规范的,方便路径读取:
 Carla_data的名称改为DATA
-HRT_data的名称改为HRT
+SMA_data的名称改为SMA
 Log_data的名称改为LOG
 asset的名称，屏幕图改为SCREEN
 
-
+先运行Process_origin_data.py，处理原始数据
 先运行Eye_maker进行整体数据滤波  # 在眼动数据大改进前需要做
 再运行Split_by_log进行log文件分割
 

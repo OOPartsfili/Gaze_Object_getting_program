@@ -25,7 +25,7 @@ def local_time2timestamp(log_str = "03/29/24 21:58:08"):
     # 因为时间戳是基于UTC的，确保转换后的时间也是UTC
     input_time = input_time.replace()
     # 将datetime对象转换为毫秒级时间戳
-    timestamp_ms = int(input_time.timestamp() * 10000000)
+    timestamp_ms = int(input_time.timestamp() * 1000)
     return timestamp_ms
 
 

@@ -20,9 +20,9 @@ def read_point(file_path):
     # 读取CSV文件
     data = pd.read_csv(file_path)
     # 提取ScreenPoint_x和ScreenPoint_y数据
-    screen_points = data[['fvo|ScreenPoint2D_x', 'fvo|ScreenPoint2D_y']]
+    screen_points = data[['ScreenPoint2D_x', 'ScreenPoint2D_y']]
     # 将DataFrame的两列转换为列表的元组
-    point_list = [(x, y) for x, y in zip(screen_points['fvo|ScreenPoint2D_x'], screen_points['fvo|ScreenPoint2D_y'])]
+    point_list = [(x, y) for x, y in zip(screen_points['ScreenPoint2D_x'], screen_points['ScreenPoint2D_y'])]
     # print(point_list)
     # 返回点列表
     return point_list
@@ -34,8 +34,8 @@ def get_threshold(gaze_points):
     # 所有点间距离计算
     distances = calculate_all_distances(gaze_points)
     # print(distances[:30])
-    # 计算距离的50分位数作为阈值
-    threshold = np.percentile(distances, 85)
+    # 计算距离的75分位数作为阈值
+    threshold = np.percentile(distances, 90)
 
     # # 计算聚类中心的平均数作为阈值
     # threshold = np.mean(centers)
@@ -123,10 +123,8 @@ def Eye_points_filter(file_path):
 
 
 
-
-
 if __name__ == '__main__':
-    file_path = '../HRT_data/HRT.csv'
+    file_path = '../SMA_data/SMA_processed.csv'
 
     # 数据读取
     gaze_points = read_point(file_path)
@@ -152,7 +150,7 @@ if __name__ == '__main__':
     df['StorageTime'] = data[['StorageTime']]
 
     # 输出DataFrame为CSV文件
-    csv_filename = '../HRT_data/Filtered_data.csv'
+    csv_filename = '../SMA_data/Filtered_data.csv'
     df.to_csv(csv_filename, index=False)
 
 

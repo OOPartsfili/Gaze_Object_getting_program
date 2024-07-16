@@ -16,14 +16,14 @@ import pandas as pd
 #将眼动数据提取出来
 # 输入HRT文件路径，log的两个时间变量
 # 输出 一个分割好的CSV文件(直接输出，不返回)
-def split_HRT(file_path,begin_takeover_timestamp,end_takeover_timestamp):
+def split_SMA(file_path, begin_takeover_timestamp, end_takeover_timestamp):
     #读取HRT文件
     data = pd.read_csv(file_path)
     filtered_data = data[(data['StorageTime'] > begin_takeover_timestamp) & (data['StorageTime'] < end_takeover_timestamp)]
 
     # 提取ScreenPoint_x和ScreenPoint_y数据
     screen_points = filtered_data[['ScreenPoint_x', 'ScreenPoint_y']]
-    screen_points.to_csv('../HRT_data/HRT_split.csv', index=False)
+    screen_points.to_csv('../SMA_data/SMA_split.csv', index=False)
     # print(type(screen_points))
 
 
@@ -33,7 +33,7 @@ def split_HRT(file_path,begin_takeover_timestamp,end_takeover_timestamp):
 def split_recording(file_path,begin_takeover_timestamp,end_takeover_timestamp):
     #读取recording文件
     data = pd.read_csv(file_path, encoding='utf-8')
-    filtered_data = data[(data['time']  *10000000 > begin_takeover_timestamp) & (data['time'] *10000000 < end_takeover_timestamp)]
+    filtered_data = data[(data['time']  *1000 > begin_takeover_timestamp) & (data['time'] *1000 < end_takeover_timestamp)]
 
     # 提取ScreenPoint_x和ScreenPoint_y数据
     filtered_data.to_csv('../Carla_data/Recording_split.csv', index=False)
@@ -100,19 +100,19 @@ def main():
             print(last_time)
             last_time = float(last_time)
 
-            #这里接管开始和结束的17位时间戳，都是int数据
+            #这里接管开始和结束的13位时间戳，都是int数据
             begin_takeover_timestamp = Time_maker.local_time2timestamp(begin_takeover)
-            end_takeover_timestamp = begin_takeover_timestamp + round(last_time * 10000000)
+            end_takeover_timestamp = begin_takeover_timestamp + round(last_time * 1000)
 
             # 这里已经吃到了两个关键数据
             print(begin_takeover_timestamp,end_takeover_timestamp)
 
 
-            HRTfile_path = '../HRT_data/Filtered_data.csv'
+            SMAfile_path = '../SMA_data/Filtered_data.csv'
             Carlafile_path = '../Carla_data/DATA.csv'
 
             #开始分割HRT数据
-            split_HRT(HRTfile_path,begin_takeover_timestamp,end_takeover_timestamp)
+            split_SMA(SMAfile_path, begin_takeover_timestamp, end_takeover_timestamp)
 
             #开始分割carla车辆信息数据
             split_recording(Carlafile_path,  begin_takeover_timestamp,end_takeover_timestamp)
