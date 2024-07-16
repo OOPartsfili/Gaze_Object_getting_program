@@ -12,10 +12,10 @@ from Scene_data import Scene1
 # 注视点可视化,在pygame窗口里绘制注视点，看看情况
 # 输入 HRT文件路径，pygame的回放时间,后视镜管理器
 # 输出：一个列名正确的DF
-def map_eyePoint(HRT_split_path="HRT_data\Mapped_HRT_split.csv"):
+def map_eyePoint(HRT_split_path="SMA_data\SMA_split.csv"):
     Screen_DF = pd.read_csv(HRT_split_path)
-    x_column_name = 'ScreenPoint_x'
-    y_column_name = 'ScreenPoint_y'
+    x_column_name = 'ScreenPoint2D_x'
+    y_column_name = 'ScreenPoint2D_y'
     if x_column_name in Screen_DF.columns and y_column_name in Screen_DF.columns:
         # 创建一个新的Screen_DF2，包含组合后的(x, y)坐标
         Screen_DF2 = Screen_DF[[x_column_name, y_column_name]].apply(lambda row: (row[x_column_name], row[y_column_name]),axis=1)
@@ -77,8 +77,8 @@ def Stare2FeelingArea(display_manager,Stare_point, file_path= 'obj_pixel_table.c
     # 使用函数获取矩形内部所有整数点坐标
     center = Stare_point
     # 这里确定矩形的长和宽
-    width = 120
-    height = 120
+    width = 160
+    height = 160
     rectangle_points = find_points_in_rectangle(center, width, height)
 
     # 对所有整数点坐标吃一次像素
@@ -125,7 +125,7 @@ def main():
     argparser.add_argument(
         '-x', '--time-factor',
         metavar='X',
-        default=0.6,
+        default=0.433,
         type=float)
     argparser.add_argument('-i', '--ignore-hero',action='store_true')
     argparser.add_argument('--move-spectator',action='store_true')
@@ -161,7 +161,7 @@ def main():
         world = client.get_world()
         vehicles = world.get_actors().filter('vehicle.*')
         print(vehicles)
-        vehicle = vehicles.find(217)
+        vehicle = vehicles.find(99)
 
         # 前景
         Set_sensor.SensorManager(world, display_manager, 'IS',
@@ -185,7 +185,7 @@ def main():
         fps = 60
 
         # 获取注视点映射坐标
-        Screen_DF2 = map_eyePoint(HRT_split_path="HRT_data/Mapped_HRT_split.csv")
+        Screen_DF2 = map_eyePoint(HRT_split_path="SMA_data/SMA_split.csv")
         # 这里加上你喜欢的颜色
         white = (255, 255, 255)
         # 这是为了辅助读取眼动数据的index，后视镜刷新一次，眼动也渲染一次

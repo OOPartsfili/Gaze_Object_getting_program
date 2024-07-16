@@ -214,7 +214,7 @@ def main():
         vehicles = world.get_actors().filter('vehicle.*')
         print(vehicles)
 
-        vehicle = vehicles.find(217)
+        vehicle = vehicles.find(99)
 
         # 初始化pygame
         pygame.init()

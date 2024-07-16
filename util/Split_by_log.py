@@ -22,7 +22,7 @@ def split_SMA(file_path, begin_takeover_timestamp, end_takeover_timestamp):
     filtered_data = data[(data['StorageTime'] > begin_takeover_timestamp) & (data['StorageTime'] < end_takeover_timestamp)]
 
     # 提取ScreenPoint_x和ScreenPoint_y数据
-    screen_points = filtered_data[['ScreenPoint_x', 'ScreenPoint_y']]
+    screen_points = filtered_data[['ScreenPoint2D_x', 'ScreenPoint2D_y']]
     screen_points.to_csv('../SMA_data/SMA_split.csv', index=False)
     # print(type(screen_points))
 
@@ -108,7 +108,7 @@ def main():
             print(begin_takeover_timestamp,end_takeover_timestamp)
 
 
-            SMAfile_path = '../SMA_data/Filtered_data.csv'
+            SMAfile_path = '../SMA_data/SMA_processed.csv'
             Carlafile_path = '../Carla_data/DATA.csv'
 
             #开始分割HRT数据
